@@ -1,0 +1,30 @@
+{
+    "name": "project_tom",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "node test/test.js | tap-spec",
+        "start": "node src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FACxBeamery/Week4_Tom_Thomas.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/FACxBeamery/Week4_Tom_Thomas/issues"
+    },
+    "homepage": "https://github.com/FACxBeamery/Week4_Tom_Thomas#readme",
+    "devDependencies": {
+        "tap-spec": "^5.0.0",
+        "tape": "^4.11.0"
+    },
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
