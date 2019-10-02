@@ -14,17 +14,21 @@ const editItem = (req, res) => {
             res.status(404).end();
         } else {
             const oldToDoListJS = JSON.parse(file);
-            console.log("oldToDoListJS: ", oldToDoListJS);
 
             const itemToEditId = Number(req.params.id);
+            if (!logic.validID(oldToDoListJS, id)) {
+                console.error("Invalid item ID supplied");
+                res.status(404).end();
+                return;
+            }
+
             const itemToEdit = oldToDoListJS.find(
                 item => item.id === itemToEditId
             );
-            console.log("itemToEdit: ", itemToEdit);
+
             const itemToEditIndex = oldToDoListJS.findIndex(
                 item => item === itemToEdit
             );
-            console.log("itemToEditIndex: ", itemToEditIndex);
 
             const dateNow = Date.now();
             newToDoListJS = [...oldToDoListJS];
@@ -33,8 +37,6 @@ const editItem = (req, res) => {
                 itemToEdit,
                 dateNow
             );
-
-            console.log("newToDoListJS: ", newToDoListJS);
 
             const newToDoListJSON = JSON.stringify(newToDoListJS);
             fs.writeFile(toDoFilePath, newToDoListJSON, error => {
