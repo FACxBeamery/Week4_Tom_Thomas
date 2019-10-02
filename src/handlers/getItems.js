@@ -1,7 +1,9 @@
 const path = require("path");
+const fs = require("fs");
+const sortArray = require("../logic.js");
 
 const getItems = (req, res) => {
-	const toDoFile = path.join(__dirname, "..", "/data/todo.json");
+	const toDoFile = path.join(__dirname, "..", "..", "/data/todo.json");
 	const sortBy = req.query.sortBy;
 
 	if (sortBy === "none") {
@@ -21,3 +23,5 @@ const getItems = (req, res) => {
 		});
 	}
 };
+
+module.exports = getItems;
