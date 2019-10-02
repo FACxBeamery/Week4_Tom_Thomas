@@ -9,32 +9,36 @@ test("Testing Tape is working", t => {
 test("Testing sortArray by dateCreated", t => {
 	const arr = [
 		{
-			title: "take dog for walk",
+			title: "Thomas to do",
 			status: false,
-			dateCreated: "Fri, 27 Sep 2019 08:18:29 GMT",
-			dateEdited: "Fri, 27 Sep 2019 08:18:29 GMT",
+			id: 1570010624961,
+			dateCreated: "Wed, 02 Oct 2019 10:03:44 GMT",
+			dateEdited: "Wed, 02 Oct 2019 10:03:44 GMT",
 		},
 		{
-			title: "take chinchilla for walk",
+			title: "a new todo item",
 			status: false,
-			dateCreated: "Fri, 27 Sep 2019 08:18:32 GMT",
-			dateEdited: "Fri, 27 Sep 2019 08:18:32 GMT",
+			id: 1570020902067,
+			dateCreated: "Wed, 02 Oct 2019 12:55:02 GMT",
+			dateEdited: "Wed, 02 Oct 2019 12:55:02 GMT",
 		},
 	];
 	const sortBy = "dateCreated";
 	const actual = logic.sortArray(arr, sortBy);
 	const expected = [
 		{
-			title: "take chinchilla for walk",
+			title: "a new todo item",
 			status: false,
-			dateCreated: "Fri, 27 Sep 2019 08:18:32 GMT",
-			dateEdited: "Fri, 27 Sep 2019 08:18:32 GMT",
+			id: 1570020902067,
+			dateCreated: "Wed, 02 Oct 2019 12:55:02 GMT",
+			dateEdited: "Wed, 02 Oct 2019 12:55:02 GMT",
 		},
 		{
-			title: "take dog for walk",
+			title: "Thomas to do",
 			status: false,
-			dateCreated: "Fri, 27 Sep 2019 08:18:29 GMT",
-			dateEdited: "Fri, 27 Sep 2019 08:18:29 GMT",
+			id: 1570010624961,
+			dateCreated: "Wed, 02 Oct 2019 10:03:44 GMT",
+			dateEdited: "Wed, 02 Oct 2019 10:03:44 GMT",
 		},
 	];
 	t.deepEqual(
@@ -42,5 +46,37 @@ test("Testing sortArray by dateCreated", t => {
 		expected,
 		"sortArray(arr, dateCreated) should return a new array sorted by the dateCreated property."
 	);
+	t.end();
+});
+
+test("Testing that removeItemByID works", t => {
+	const arr = [
+		{
+			title: "Thomas to do",
+			status: false,
+			id: 1570010624961,
+			dateCreated: "Wed, 02 Oct 2019 10:03:44 GMT",
+			dateEdited: "Wed, 02 Oct 2019 10:03:44 GMT",
+		},
+		{
+			title: "a new todo item",
+			status: false,
+			id: 1570020902067,
+			dateCreated: "Wed, 02 Oct 2019 12:55:02 GMT",
+			dateEdited: "Wed, 02 Oct 2019 12:55:02 GMT",
+		},
+	];
+	const id = 1570020902067;
+	const actual = logic.removeItemByID(arr, id);
+	const expected = [
+		{
+			title: "Thomas to do",
+			status: false,
+			id: 1570010624961,
+			dateCreated: "Wed, 02 Oct 2019 10:03:44 GMT",
+			dateEdited: "Wed, 02 Oct 2019 10:03:44 GMT",
+		},
+	];
+	t.deepEqual(actual, expected, "removeItemByID should remove the item with the corresponding ID from the array.");
 	t.end();
 });

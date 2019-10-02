@@ -29,4 +29,8 @@ const sortArray = (arr, sortMethod) => {
 	return newArr;
 };
 
-module.exports = { sortArray, createItem };
+const removeItemByID = (arr, idNum) => arr.filter(item => item.id !== idNum);
+
+const validID = (arr, idNum) => Boolean(arr.filter(item => item.id === idNum).length);
+
+module.exports = { sortArray, createItem, removeItemByID, validID };
