@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const sortArray = require("../logic.js");
+const logic = require("../logic.js");
 
 const getItems = (req, res) => {
 	const toDoFile = path.join(__dirname, "..", "..", "/data/todo.json");
@@ -15,9 +15,10 @@ const getItems = (req, res) => {
 			} else {
 				const toDo = JSON.parse(file);
 				if (sortBy === "dateCreated" || sortBy === "dateEdited") {
-					res.send(sortArray(toDo, sortBy));
+					res.send(logic.sortArray(toDo, sortBy));
 				} else {
-					console.error(`${sortBy} is not a valid sorting method.`);
+					console.error(`${sortBy} is not a valid sorting method. Please try again.`);
+					res.status(400).end();
 				}
 			}
 		});

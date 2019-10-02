@@ -10,4 +10,4 @@ const sortArray = (arr, sortMethod) => {
 	return newArr;
 };
 
-module.exports = sortArray;
+module.exports = { sortArray };
