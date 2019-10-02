@@ -1,24 +1,21 @@
-const createItem = reqBodyObj => {
-    // reqBodyObj stands in for req.fields
-    let newItem = {};
+const createItem = (reqBodyObj, dateInMS) => {
+	// reqBodyObj stands in for req.fields
+	let newItem = {};
 
-    newItem.title = reqBodyObj.title;
+	newItem.title = reqBodyObj.title;
 
-    if (reqBodyObj.status) {
-        newItem.status = reqBodyObj.status;
-    } else {
-        newItem.status = false;
-    }
+	if (reqBodyObj.status) {
+		newItem.status = reqBodyObj.status;
+	} else {
+		newItem.status = false;
+	}
 
-    newItem.id = Date.now();
-    const dateNow = new Date();
-    newItem.dateCreated = dateNow.toUTCString();
-    newItem.dateEdited = dateNow.toUTCString();
+	newItem.id = dateInMS;
+	newItem.dateCreated = new Date(dateInMS).toUTCString();
+	newItem.dateEdited = new Date(dateInMS).toUTCString();
 
-    return newItem;
+	return newItem;
 };
-
-
 
 const sortArray = (arr, sortMethod) => {
 	let newArr = [...arr];
@@ -33,4 +30,3 @@ const sortArray = (arr, sortMethod) => {
 };
 
 module.exports = { sortArray, createItem };
-
