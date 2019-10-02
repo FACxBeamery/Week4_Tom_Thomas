@@ -14,7 +14,7 @@ const getItems = (req, res) => {
 				console.error(error.message);
 			} else {
 				const toDo = JSON.parse(file);
-				if (sortBy === "dateCreated" || sortBy === "dateEdited") {
+				if (["dateCreated", "dateEdited", "status"].includes(sortBy)) {
 					res.send(logic.sortArray(toDo, sortBy));
 				} else {
 					console.error(`${sortBy} is not a valid sorting method. Please try again.`);

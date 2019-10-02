@@ -18,33 +18,38 @@ const createItem = (reqBodyObj, dateInMS) => {
 };
 
 const editItemOnList = (reqBodyObj, itemToEdit, dateInMS) => {
-    let editedItem = {};
+	let editedItem = {};
 
-    editedItem.id = itemToEdit.id;
-    editedItem.dateCreated = itemToEdit.dateCreated;
-    if (reqBodyObj.title) {
-        editedItem.title = reqBodyObj.title;
-    }
-    if (reqBodyObj.status) {
-        editedItem.status = reqBodyObj.status;
-    } else {
-        editedItem.status = itemToEdit.status;
-    }
-    editedItem.dateEdited = new Date(dateInMS).toUTCString();
+	editedItem.id = itemToEdit.id;
+	editedItem.dateCreated = itemToEdit.dateCreated;
+	if (reqBodyObj.title) {
+		editedItem.title = reqBodyObj.title;
+	}
+	if (reqBodyObj.status) {
+		editedItem.status = reqBodyObj.status;
+	} else {
+		editedItem.status = itemToEdit.status;
+	}
+	editedItem.dateEdited = new Date(dateInMS).toUTCString();
 
-    return editedItem;
+	return editedItem;
 };
 
 const sortArray = (arr, sortMethod) => {
-    let newArr = [...arr];
+	let newArr = [...arr];
+	if (["dateEdited", "dateCreated"].includes(sortBy)) {
+		newArr.sort((a, b) => {
+			const dateA = new Date(a[sortMethod]);
+			const dateB = new Date(b[sortMethod]);
+			return dateB - dateA;
+		});
+	} else if (sortBy === "status") {
+		const incomplete = newArr.filter(item => item.status === false);
+		const complete = newArr.filter(item => item.status === true);
+		return incomplete.concat(complete);
+	}
 
-    newArr.sort((a, b) => {
-        const dateA = new Date(a[sortMethod]);
-        const dateB = new Date(b[sortMethod]);
-        return dateB - dateA;
-    });
-
-    return newArr;
+	return newArr;
 };
 
 const removeItemByID = (arr, idNum) => arr.filter(item => item.id !== idNum);
@@ -52,4 +57,3 @@ const removeItemByID = (arr, idNum) => arr.filter(item => item.id !== idNum);
 const validID = (arr, idNum) => Boolean(arr.filter(item => item.id === idNum).length);
 
 module.exports = { sortArray, createItem, removeItemByID, validID, editItemOnList };
-

@@ -27,7 +27,7 @@ const deleteItem = (req, res) => {
 					console.error(error.message);
 					res.status(404).end();
 				} else {
-					res.status(201).end();
+					res.status(204).end();
 				}
 			});
 		}
