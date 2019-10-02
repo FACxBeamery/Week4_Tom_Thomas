@@ -1,6 +1,7 @@
 const express = require("express");
 const addItems = require("./handlers/addItems.js");
 const getItems = require("./handlers/getItems.js");
+const editItem = require("./handlers/editItem.js");
 const router = express();
 
 // router.use(express.static("public"));
@@ -11,6 +12,6 @@ const router = express();
 
 // router.delete("/items/:id(d+)", deleteItem);
 
-// router.patch("/items/:id(d+)", editItem);
+router.patch("/items/:id(\\d+)", editItem);
 
 module.exports = router;

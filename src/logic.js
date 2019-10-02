@@ -18,19 +18,34 @@ const createItem = reqBodyObj => {
     return newItem;
 };
 
+const editItemOnList = (reqBodyObj, itemToEdit, dateInMS) => {
+    let editedItem = {};
 
+    editedItem.id = itemToEdit.id;
+    editedItem.dateCreated = itemToEdit.dateCreated;
+    if (reqBodyObj.title) {
+        editedItem.title = reqBodyObj.title;
+    }
+    if (reqBodyObj.status) {
+        editedItem.status = reqBodyObj.status;
+    } else {
+        editedItem.status = itemToEdit.status;
+    }
+    editedItem.dateEdited = new Date(dateInMS).toUTCString();
 
-const sortArray = (arr, sortMethod) => {
-	let newArr = [...arr];
-
-	newArr.sort((a, b) => {
-		const dateA = new Date(a[sortMethod]);
-		const dateB = new Date(b[sortMethod]);
-		return dateB - dateA;
-	});
-
-	return newArr;
+    return editedItem;
 };
 
-module.exports = { sortArray, createItem };
+const sortArray = (arr, sortMethod) => {
+    let newArr = [...arr];
 
+    newArr.sort((a, b) => {
+        const dateA = new Date(a[sortMethod]);
+        const dateB = new Date(b[sortMethod]);
+        return dateB - dateA;
+    });
+
+    return newArr;
+};
+
+module.exports = { sortArray, createItem, editItemOnList };
