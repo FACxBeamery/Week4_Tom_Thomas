@@ -10,7 +10,7 @@ router.get("/items", getItems);
 
 router.post("/items", addItems);
 
-router.delete("/items/:id", deleteItem);
+router.delete("/items/:id(\\d+)", deleteItem);
 
 // router.patch("/items/:id(\d+)", editItem);
 
