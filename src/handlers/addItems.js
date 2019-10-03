@@ -26,6 +26,7 @@ const addItems = (req, res) => {
 					res.status(201).end();
 				}
 			});
+			res.redirect(302, "/");
 		}
 	});
 };
