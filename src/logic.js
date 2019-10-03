@@ -24,9 +24,11 @@ const editItemOnList = (reqBodyObj, itemToEdit, dateInMS) => {
     editedItem.dateCreated = itemToEdit.dateCreated;
     if (reqBodyObj.title) {
         editedItem.title = reqBodyObj.title;
+    } else {
+        editedItem.title = itemToEdit.title;
     }
     if (reqBodyObj.status) {
-        editedItem.status = reqBodyObj.status;
+        editedItem.status = reqBodyObj.status === "true";
     } else {
         editedItem.status = itemToEdit.status;
     }
