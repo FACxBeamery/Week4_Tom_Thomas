@@ -10,8 +10,7 @@ body {
 	font-family: "Lato", "sans-serif";
 }
 
-input[type="text"],
-select {
+.new-item-form {
 	width: 80vw;
 	padding: 0.5rem 0.5rem;
 	margin: 0;
@@ -34,10 +33,9 @@ select {
 	align-items: center;
 }
 
-.input-form {
-	margin-right: 0;
-	margin-left: 4vw;
-	vertical-align: middle;
+.edit-item-button {
+	padding: 0.5rem;
+	/* background-color: #009; */
 }
 
 .new-item-button {
@@ -50,4 +48,41 @@ select {
 	padding: 0.5rem 1rem;
 	color: #e6e6e6;
 	font-size: 1rem;
+}
+
+.overlay {
+	position: fixed; /* Sit on top of the page content */
+	display: none; /* Hidden by default */
+	width: 100%; /* Full width (cover the whole page) */
+	height: 100%; /* Full height (cover the whole page) */
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.edit-form {
+	position: absolute;
+	top: 50%;
+	left: 25%;
+	padding: 0.5rem;
+	border: 1px solid #999;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	width: 50%;
+}
+
+.submit-edited-item-button {
+	border: solid 1px rgb(0, 153, 255);
+	background: rgb(0, 153, 255);
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding: 0.5rem 1rem;
+	color: #e6e6e6;
+	font-size: 1rem;
+	position: absolute;
+	left: 75%;
+	top: 50%;
 }
