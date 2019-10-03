@@ -23,41 +23,88 @@ const addItemToList = toDoObj => {
     const node = document.createTextNode(title);
     para.appendChild(node);
     const checkbox = document.createElement("input");
+    const deleteButton = document.createElement("button");
+    const deleteButtonText = document.createTextNode("Delete");
+    deleteButton.append(deleteButtonText);
     const id = toDoObj.id;
     const idString = id.toString();
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("id", idString);
     checkbox.checked = toDoObj.status;
+    deleteButton.setAttribute("id", idString + "-delete");
+    deleteButton.classList.add("delete-item-button");
     para.appendChild(checkbox);
+    para.append(deleteButton);
     document.getElementById("showToDoContainer").appendChild(para);
     addCheckBoxListener(id);
-    // para.classList.add("para=class");
+    addDeleteButtonListener(toDoObj.id.toString() + "-delete", toDoObj.title);
 };
 
 const addCheckBoxListener = id => {
     const checkbox = document.getElementById(id.toString());
     checkbox.addEventListener("click", () => {
-        console.log("checkbox.checked 1: ", checkbox.checked);
         let xhrEditStatus = new XMLHttpRequest();
         xhrEditStatus.addEventListener("readystatechange", () => {
             if (
                 xhrEditStatus.readyState === 4 &&
                 xhrEditStatus.status === 201
             ) {
-                // checkbox.checked = !checkbox.checked;
-                console.log("checkbox.value 2: ", checkbox.checked);
             }
         });
-        console.log(id, typeof id);
         xhrEditStatus.open("PATCH", `items/${id}`, true);
         xhrEditStatus.setRequestHeader(
             "Content-Type",
             "application/x-www-form-urlencoded"
         );
-        console.log("checkbox.checked 3: ", checkbox.checked);
         const body = `status=${checkbox.checked}`;
-        console.log(body);
         xhrEditStatus.send(body);
-        console.log("end:", checkbox.checked);
+    });
+};
+
+const addDeleteButtonListener = (id, title) => {
+    const deleteButton = document.getElementById(id);
+    deleteButton.addEventListener("click", () => {
+        overlayOn();
+        const overlay = document.querySelector(".overlay");
+        const para = document.createElement("p");
+        const node = document.createTextNode(
+            `Are you sure you want to delete the item titled ${title}?`
+        );
+        para.appendChild(node);
+        overlay.appendChild(para);
+        const yesButton = document.createElement("button");
+        const yesButtonText = document.createTextNode("Yes");
+        yesButton.setAttribute("id", "yes-delete-button");
+        addYesDeleteButtonListener(id.substring(0, id.indexOf("-")));
+        yesButton.appendChild(yesButtonText);
+        overlay.appendChild(yesButton);
+
+        const noButton = document.createElement("button");
+        const noButtonText = document.createTextNode("No");
+        noButton.setAttribute("id", "no-delete-button");
+        noButton.appendChild(noButtonText);
+        overlay.appendChild(noButton);
+        addNoDeleteButtonListener();
+    });
+};
+
+const addYesDeleteButtonListener = id => {
+    const yesButton = document.getElementById("yes-delete-button");
+    yesButton.addEventListener("click", () => {
+        let xhrDelete = new XMLHttpRequest();
+        xhrDelete.open("DELETE", `items/${id}`, true);
+        xhrDelete.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        xhrDelete.send();
+    });
+};
+
+const addNoDeleteButtonListener = () => {
+    const noButton = document.getElementById("no-delete-button");
+    const overlay = document.querySelector(".overlay");
+    noButton.addEventListener("click", () => {
+        overlay.style.display = "none";
     });
 };
