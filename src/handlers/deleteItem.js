@@ -33,6 +33,7 @@ const deleteItem = (req, res) => {
                     res.status(204).end();
                 }
             });
+            res.redirect(302, "/");
         }
     });
 };
