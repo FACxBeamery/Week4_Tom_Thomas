@@ -9,9 +9,8 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
-		<title>Check Off!</title>
+		<title>Check off!</title>
 	</head>
-
 	<body>
 		<header>
 			<h1>Check off!</h1>
@@ -36,6 +35,17 @@
 				<p id="show-to-do-container-header">
 					Here is your To-Do List:
 				</p>
+				<p id="show-to-do-container-header">
+					Sort by:
+				</p>
+				<form class="form-inline" action="/items" method="GET">
+					<select id="sortBy">
+						<option value="dateCreated">Most recently created</option>
+						<option value="dateEdited">Most recently edited</option>
+						<option value="status">Incomplete first</option>
+					</select>
+				</form>
+
 				<div id="showToDoContainer"></div>
 			</section>
 		</main>
