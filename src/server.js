@@ -3,7 +3,7 @@ const formidable = require("express-formidable");
 const router = require("./router.js");
 
 const app = express();
-const port = 5500;
+const port = process.env.PORT || 3000;
 
 app.use(formidable());
 
