@@ -1,6 +1,5 @@
 window.addEventListener("load", () => {
     let xhr = new XMLHttpRequest();
-
     xhr.addEventListener("readystatechange", () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let outputToDo = JSON.parse(xhr.responseText);
@@ -19,6 +18,21 @@ window.addEventListener("load", () => {
 
 document.getElementById("sortBy").addEventListener("change", event => {
     const sortMethod = event.target.value;
+    const toDoContainer = document.getElementById("showToDoContainer");
+
+    while (toDoContainer.firstChild) {
+        // clear nodelist
+        toDoContainer.removeChild(toDoContainer.firstChild);
+    }
+
+    document.getElementById("sortBy").value = "";
+
+    // const options = document.getElementById("sortBy").options;
+    // console.log("options: ", options);
+
+    // for (let i = 0; i < options.length; i++) {
+    //     options[i].selected = false;
+    // }
 
     let xhrSort = new XMLHttpRequest();
 
