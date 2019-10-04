@@ -150,6 +150,7 @@ const addYesDeleteButtonListener = id => {
 		xhrDelete.addEventListener("readystatechange", () => {
 			if (xhrDelete.readyState === 4 /*&&
                 xhrDelete.status === 200*/) {
+				// add confirmation text here!
 				location.reload();
 			}
 		});
