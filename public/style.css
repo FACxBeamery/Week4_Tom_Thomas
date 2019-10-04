@@ -29,7 +29,8 @@ body {
 
 .form-inline {
 	display: flex;
-	flex-flow: row wrap;
+	flex-direction: row;
+	justify-content: center;
 	align-items: center;
 }
 
@@ -88,6 +89,8 @@ body {
 }
 
 .confirm-text {
+	display: flex;
+	flex-direction: column;
 	background-color: #e6e6e6;
 	width: 50vw;
 	height: 20vw;
@@ -99,15 +102,62 @@ body {
 	padding: 1rem;
 }
 
-.yes-button {
+.yes-delete-button {
 	background-color: rgb(7, 128, 226);
 	color: #e6e6e6;
 	border-radius: 4px;
 	border: solid 1px rgb(7, 128, 226);
+	margin: 0.5rem;
+	padding: 0.2rem;
 }
 
-.no-button {
-	color: #111111
+.no-delete-button {
+	color: #111111;
 	border-radius: 4px;
 	border: solid 1px rgb(7, 128, 226);
+	margin: 0.5rem;
+	padding: 0.2rem;
+}
+
+.todo-item {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	border: solid 1px rgb(7, 128, 226);
+	margin: 0.5rem;
+	padding: 0.2rem;
+	width: 50vw;
+}
+
+.logo {
+	width: 25vw;
+}
+
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 1rem;
+}
+
+h1 {
+	font-size: 4rem;
+}
+
+.todo-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+footer {
+	text-align: center;
+	margin-bottom: 0;
+}
+
+#show-to-do-container-header {
+	padding: 1rem;
 }
