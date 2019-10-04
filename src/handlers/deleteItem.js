@@ -10,7 +10,6 @@ const deleteItem = (req, res) => {
             res.status(404).end();
         } else {
             const toDoList = JSON.parse(file);
-            console.log("req.params: ", req.params);
             const id = Number(req.params.id);
             if (!logic.validID(toDoList, id)) {
                 console.error("Invalid id supplied");
@@ -20,7 +19,6 @@ const deleteItem = (req, res) => {
             const newToDoList = JSON.stringify(
                 logic.removeItemByID(toDoList, id)
             );
-            console.log("newToDoList: ", newToDoList);
             if (newToDoList === "error") {
                 res.status(404).end();
                 return;
@@ -33,7 +31,6 @@ const deleteItem = (req, res) => {
                     res.status(204).end();
                 }
             });
-            res.redirect(302, "/");
         }
     });
 };
