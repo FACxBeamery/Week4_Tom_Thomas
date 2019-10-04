@@ -1,20 +1,31 @@
 window.addEventListener("load", () => {
-	let xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
-	xhr.addEventListener("readystatechange", () => {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let outputToDo = JSON.parse(xhr.responseText);
+    xhr.addEventListener("readystatechange", () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let outputToDo = JSON.parse(xhr.responseText);
 
-			console.log(outputToDo);
+            console.log(outputToDo);
 
-			for (let i = 0; i < outputToDo.length; i++) {
-				addItemToList(outputToDo[i]);
-			}
-		}
-	});
+            for (let i = 0; i < outputToDo.length; i++) {
+                addItemToList(outputToDo[i]);
+            }
+        } else if (xhr.readyState === 4 && xhr.status !== 200) {
+            overlayOn();
+            const overlay = document.querySelector(".overlay");
+            const para = document.createElement("p");
+            para.classList.add("server-error-text");
+            const node = document.createTextNode(
+                "We're experiencing issues on our end. Please refresh the page."
+            );
+            para.appendChild(node);
+            overlay.appendChild(para);
+        }
+    });
 
-	xhr.open("GET", "/items?sortBy=none", true);
-	xhr.send();
+    xhr.open("GET", "/items?sortBy=none", true);
+    xhr.send();
+
 });
 
 document.getElementById("sortBy").addEventListener("change", event => {
@@ -28,32 +39,34 @@ document.getElementById("sortBy").addEventListener("change", event => {
 
 	document.getElementById("sortBy").value = "";
 
-	// const options = document.getElementById("sortBy").options;
-	// console.log("options: ", options);
-
-	// for (let i = 0; i < options.length; i++) {
-	//     options[i].selected = false;
-	// }
-
 	let xhrSort = new XMLHttpRequest();
 
 	xhrSort.addEventListener("readystatechange", () => {
 		if (xhrSort.readyState === 4 && xhrSort.status === 200) {
 			let outputToDoSort = JSON.parse(xhrSort.responseText);
 
-			console.log(outputToDoSort);
-
-			for (let i = 0; i < outputToDoSort.length; i++) {
-				addItemToList(outputToDoSort[i]);
-			}
-		}
-	});
+      for (let i = 0; i < outputToDoSort.length; i++) {
+          addItemToList(outputToDoSort[i]);
+      }
+    } else if (xhrSort.readyState === 4 && xhrSort.status !== 200) {
+        overlayOn();
+        const overlay = document.querySelector(".overlay");
+        const para = document.createElement("p");
+        para.classList.add("server-error-text");
+        const node = document.createTextNode(
+            "We're experiencing issues on our end. Please refresh the page."
+        );
+        para.appendChild(node);
+        overlay.appendChild(para);
+        }
+    });
 
 	xhrSort.open("GET", `/items?sortBy=${sortMethod}`, true);
 	xhrSort.send();
 });
 
 const addItemToList = toDoObj => {
+
 	const title = toDoObj.title;
 	const id = toDoObj.id;
 	const idString = id.toString();
@@ -104,6 +117,7 @@ const addItemToList = toDoObj => {
 	addCheckBoxListener(id);
 	addEditItemListener(toDoObj);
 	addDeleteButtonListener(toDoObj.id.toString() + "-delete", toDoObj.title);
+
 };
 
 const addEditItemListener = toDoObject => {
@@ -120,55 +134,80 @@ const overlayOn = () => {
 };
 
 const createEditBox = toDoObject => {
-	const overlay = document.querySelector(".overlay");
-	const formNode = document.createElement("form");
-	formNode.class = "form-inline";
-	const inputNode = document.createElement("input");
-	inputNode.type = "text";
-	inputNode.classList.add("edit-form");
-	const editSubmitButton = document.createElement("button");
-	editSubmitButton.setAttribute("id", "edit-submit-button");
-	editSubmitButton.classList.add("submit-edited-item-button");
-	editSubmitButtonText = document.createTextNode("Submit");
-	editSubmitButton.appendChild(editSubmitButtonText);
-	formNode.appendChild(editSubmitButton);
-	formNode.appendChild(inputNode);
-	overlay.appendChild(formNode);
-	inputNode.value = toDoObject.title;
-	document.getElementById("edit-submit-button").addEventListener("click", event => {
-		let xhrEditTitle = new XMLHttpRequest();
 
-		xhrEditTitle.addEventListener("readystatechange", () => {
-			if (xhrEditTitle.readyState === 4 && xhrEditTitle.status === 200) {
-				overlay.style.display = "none";
-				while (overlay.firstChild) {
-					// clear nodelist
-					overlay.removeChild(overlay.firstChild);
-				}
-			}
-		});
-		xhrEditTitle.open("PATCH", `items/${toDoObject.id}`, true);
-		xhrEditTitle.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		const body = `title=${inputNode.value}`;
-		xhrEditTitle.send(body);
-	});
+    const overlay = document.querySelector(".overlay");
+    const formNode = document.createElement("form");
+    formNode.class = "form-inline";
+    const inputNode = document.createElement("input");
+    inputNode.type = "text";
+    inputNode.classList.add("edit-form");
+    const editSubmitButton = document.createElement("button");
+    editSubmitButton.setAttribute("id", "edit-submit-button");
+    editSubmitButton.classList.add("submit-edited-item-button");
+    editSubmitButtonText = document.createTextNode("Submit");
+    editSubmitButton.appendChild(editSubmitButtonText);
+    formNode.appendChild(editSubmitButton);
+    formNode.appendChild(inputNode);
+    overlay.appendChild(formNode);
+    inputNode.value = toDoObject.title;
+    document
+        .getElementById("edit-submit-button")
+        .addEventListener("click", event => {
+            let xhrEditTitle = new XMLHttpRequest();
+
+            xhrEditTitle.addEventListener("readystatechange", () => {
+                if (
+                    xhrEditTitle.readyState === 4 &&
+                    xhrEditTitle.status === 200
+                ) {
+                    overlay.style.display = "none";
+                    while (overlay.firstChild) {
+                        // clear nodelist
+                        overlay.removeChild(overlay.firstChild);
+                    }
+                } else if (
+                    xhrEditTitle.readyState === 4 &&
+                    xhrEditTitle.status !== 200
+                ) {
+                    overlayOn();
+                    const overlay = document.querySelector(".overlay");
+                    const para = document.createElement("p");
+                    para.classList.add("server-error-text");
+                    const node = document.createTextNode(
+                        "We're experiencing issues on our end. Please refresh the page."
+                    );
+                    para.appendChild(node);
+                    overlay.appendChild(para);
+                }
+            });
+            xhrEditTitle.open("PATCH", `items/${toDoObject.id}`, true);
+            xhrEditTitle.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            const body = `title=${inputNode.value}`;
+            xhrEditTitle.send(body);
+        });
 };
 
 const addCheckBoxListener = id => {
-	const checkbox = document.getElementById(id.toString());
-	const toDoItem = document.getElementById(id.toString() + "-todo-item");
-	checkbox.addEventListener("click", () => {
-		if (checkbox.checked) {
-			toDoItem.style.border = "solid 1px green";
-		} else {
-			toDoItem.style.border = "solid 1px rgb(7, 128, 226)";
-		}
-		let xhrEditStatus = new XMLHttpRequest();
-		xhrEditStatus.open("PATCH", `items/${id}`, true);
-		xhrEditStatus.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		const body = `status=${checkbox.checked}`;
-		xhrEditStatus.send(body);
-	});
+    const checkbox = document.getElementById(id.toString());
+    const toDoItem = document.getElementById(id.toString + "-todo-item");
+    checkbox.addEventListener("click", () => {
+        if (checkbox.checked) {
+            toDoItem.style.border = "solid 1px green";
+        } else {
+            toDoItem.style.border = "solid 1px rgb(7, 128, 226)";
+        }
+        let xhrEditStatus = new XMLHttpRequest();
+        xhrEditStatus.open("PATCH", `items/${id}`, true);
+        xhrEditStatus.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        const body = `status=${checkbox.checked}`;
+        xhrEditStatus.send(body);
+    });
 };
 
 const addDeleteButtonListener = (id, title) => {
@@ -202,43 +241,57 @@ const addDeleteButtonListener = (id, title) => {
 };
 
 const addYesDeleteButtonListener = id => {
-	const yesButton = document.getElementById("yes-delete-button");
-	yesButton.addEventListener("click", () => {
-		let xhrDelete = new XMLHttpRequest();
+    const yesButton = document.getElementById("yes-delete-button");
+    yesButton.addEventListener("click", () => {
+        let xhrDelete = new XMLHttpRequest();
 
-		xhrDelete.addEventListener("readystatechange", () => {
-			if (xhrDelete.readyState === 4 /*&&
-                xhrDelete.status === 200*/) {
-				const overlay = document.querySelector(".overlay");
-				while (overlay.firstChild) {
-					// clear nodelist
-					overlay.removeChild(overlay.firstChild);
-				}
-				const deleteSuccess = document.createElement("p");
-				const deleteSuccessMessage = document.createTextNode("Successful deletion!");
-				deleteSuccess.appendChild(deleteSuccessMessage);
-				deleteSuccess.classList.add("confirm-text");
-				overlay.appendChild(deleteSuccess);
-				setTimeout(() => {
-					location.reload();
-				}, 700);
-			}
-		});
+        xhrDelete.addEventListener("readystatechange", () => {
+            if (xhrDelete.readyState === 4 && xhrDelete.status === 204) {
+                const overlay = document.querySelector(".overlay");
+                while (overlay.firstChild) {
+                    // clear nodelist
+                    overlay.removeChild(overlay.firstChild);
+                }
+                const deleteSuccess = document.createElement("p");
+                const deleteSuccessMessage = document.createTextNode(
+                    "Successful deletion!"
+                );
+                deleteSuccess.appendChild(deleteSuccessMessage);
+                deleteSuccess.classList.add("confirm-text");
+                overlay.appendChild(deleteSuccess);
+                setTimeout(() => {
+                    location.reload();
+                }, 700);
+            } else if (xhrDelete.readyState === 4 && xhrDelete.status !== 204) {
+                overlayOn();
+                const overlay = document.querySelector(".overlay");
+                const para = document.createElement("p");
+                para.classList.add("server-error-text");
+                const node = document.createTextNode(
+                    "We're experiencing issues on our end. Please refresh the page."
+                );
+                para.appendChild(node);
+                overlay.appendChild(para);
+            }
+        });
 
-		xhrDelete.open("DELETE", `items/${id}`, true);
-		xhrDelete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhrDelete.send();
-	});
+        xhrDelete.open("DELETE", `items/${id}`, true);
+        xhrDelete.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        xhrDelete.send();
+    });
 };
 
 const addNoDeleteButtonListener = () => {
-	const noButton = document.getElementById("no-delete-button");
-	const overlay = document.querySelector(".overlay");
-	noButton.addEventListener("click", () => {
-		overlay.style.display = "none";
-		while (overlay.firstChild) {
-			// clear nodelist
-			overlay.removeChild(overlay.firstChild);
-		}
-	});
+    const noButton = document.getElementById("no-delete-button");
+    const overlay = document.querySelector(".overlay");
+    noButton.addEventListener("click", () => {
+        overlay.style.display = "none";
+        while (overlay.firstChild) {
+            // clear nodelist
+            overlay.removeChild(overlay.firstChild);
+        }
+    });
 };

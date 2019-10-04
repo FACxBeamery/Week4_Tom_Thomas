@@ -89,49 +89,51 @@ body {
 }
 
 .confirm-text {
-	display: flex;
-	flex-direction: column;
-	background-color: #e6e6e6;
-	width: 50vw;
-	height: 20vw;
-	text-align: center;
-	color: #222;
-	position: absolute;
-	top: 40%;
-	left: 25%;
-	padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    color: #222;
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    padding: 1rem;
 }
 
 .yes-delete-button {
-	background-color: rgb(7, 128, 226);
-	color: #e6e6e6;
-	border-radius: 4px;
-	border: solid 1px rgb(7, 128, 226);
-	margin: 0.5rem;
-	padding: 0.2rem;
+    background-color: rgb(7, 128, 226);
+    color: #e6e6e6;
+    border-radius: 4px;
+    border: solid 1px rgb(7, 128, 226);
+    margin: 0.5rem;
+    padding: 0.25rem;
 }
 
 .no-delete-button {
-	color: #111111;
-	border-radius: 4px;
-	border: solid 1px rgb(7, 128, 226);
-	margin: 0.5rem;
-	padding: 0.2rem;
+    color: #111111;
+    border-radius: 4px;
+    border: solid 1px rgb(7, 128, 226);
+    margin: 0.5rem;
+    padding: 0.25rem;
 }
 
 .todo-item {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-	border: solid 1px rgb(7, 128, 226);
-	margin: 0.5rem;
-	padding: 0.2rem;
-	width: 50vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    border: solid 1px rgb(7, 128, 226);
+    margin: 0.5rem;
+    padding: 0.25rem;
+    width: 50vw;
 }
 
 .logo {
-	width: 25vw;
+    width: 15vw;
+    max-width: 15vw;
 }
 
 header {
@@ -163,6 +165,20 @@ footer {
 }
 
 .todo-title {
-	margin-right: auto;
-	padding: 0.5rem;
+    margin-right: auto;
+    padding: 0.5rem;
+}
+
+.server-error-text {
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    color: rgb(130, 0, 0);
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    padding: 1rem;
 }
