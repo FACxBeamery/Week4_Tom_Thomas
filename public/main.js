@@ -172,7 +172,7 @@ const createEditBox = toDoObject => {
 
 const addCheckBoxListener = id => {
 	const checkbox = document.getElementById(id.toString());
-	const toDoItem = document.getElementById(id.toString + "-todo-item");
+	const toDoItem = document.getElementById(id.toString() + "-todo-item");
 	checkbox.addEventListener("click", () => {
 		if (checkbox.checked) {
 			toDoItem.style.border = "solid 1px green";
