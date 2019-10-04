@@ -20,11 +20,13 @@
 		<main>
 			<div class="overlay"></div>
 			<form class="form-inline" action="/items" method="POST">
+				<label for="to-do-entry">Add an item:</label>
 				<input
 					type="text"
 					class="new-item-form"
 					id="to-do-entry"
 					name="title"
+					label="add an item"
 					placeholder="Add new to-do"
 					required
 				/>
@@ -32,13 +34,14 @@
 			</form>
 
 			<section class="todo-list">
-				<p id="show-to-do-container-header">
+				<p class="show-to-do-container-header">
 					Here is your To-Do List:
 				</p>
-				<p id="show-to-do-container-header">
+				<p class="show-to-do-container-header">
 					Sort by:
 				</p>
 				<form class="form-inline" action="/items" method="GET">
+					<label for="sortBy">Choose sort option:</label>
 					<select id="sortBy">
 						<option value="dateCreated">Most recently created</option>
 						<option value="dateEdited">Most recently edited</option>
