@@ -1,48 +1,63 @@
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<link rel="stylesheet" href="style.css" />
-		<link href="https://fonts.googleapis.com/css?family=Lato:300&display=swap" rel="stylesheet" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<title>Tab title</title>
-	</head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Lato:300&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <title>Tab title</title>
+    </head>
+    <body>
+        <header>
+            <h1>Check off!</h1>
+            <img class="logo" src="img/checked.svg" alt="to do list logo" />
+        </header>
 
-	<body>
-		<header>
-			<h1>Check off edited!</h1>
-			<img class="logo" src="img/checked.svg" alt="to do list logo" />
-		</header>
+        <main>
+            <div class="overlay"></div>
+            <form class="form-inline" action="/items" method="POST">
+                <input
+                    type="text"
+                    class="new-item-form"
+                    id="to-do-entry"
+                    name="title"
+                    placeholder="Add new to-do"
+                />
+                <button class="new-item-button" type="submit">+</button>
+            </form>
 
-		<main>
-			<div class="overlay"></div>
-			<form class="form-inline" action="/items" method="POST">
-				<input
-					type="text"
-					class="new-item-form"
-					id="to-do-entry"
-					name="title"
-					placeholder="Add new to-do"
-					required
-				/>
-				<button class="new-item-button" type="submit">+</button>
-			</form>
 
-			<section class="todo-list">
-				<p id="show-to-do-container-header">
-					Here is your To-Do List:
-				</p>
-				<div id="showToDoContainer"></div>
-			</section>
-		</main>
+            <section class="todo-list">
+                <p id="show-to-do-container-header">
+                    Here is your To-Do List:
+                </p>
+                <p id="show-to-do-container-header">
+                    Sort by:
+                </p>
+                <form class="form-inline" action="/items" method="GET">
+                    <select id="sortBy">
+                        <option value="dateCreated"
+                            >Most recently created</option
+                        >
+                        <option value="dateEdited">Most recently edited</option>
+                        <option value="status">Incomplete first</option>
+                    </select>
+                </form>
 
-		<footer>
-			<h4>Brought to you by the Beamery Graduate Team.</h4>
-		</footer>
-	</body>
+                <div id="showToDoContainer"></div>
+            </section>
+        </main>
+
+        <footer>
+            <h4>Brought to you by the Beamery Graduate Team.</h4>
+        </footer>
+    </body>
 </html>
 <script type="text/javascript" src="main.js"></script>

@@ -1,18 +1,56 @@
 window.addEventListener("load", () => {
     let xhr = new XMLHttpRequest();
+  
+    xhr.addEventListener("readystatechange", () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let outputToDo = JSON.parse(xhr.responseText);
 
+            console.log(outputToDo);
 
-	xhr.addEventListener("readystatechange", () => {
-		if (xhr.readyState === 4 && xhr.status === 200) {
-			let outputToDo = JSON.parse(xhr.responseText);
-			for (let i = 0; i < outputToDo.length; i++) {
-				addItemToList(outputToDo[i]);
-			}
-		}
-	});
+            for (let i = 0; i < outputToDo.length; i++) {
+                addItemToList(outputToDo[i]);
+            }
+        }
+    });
 
     xhr.open("GET", "/items?sortBy=none", true);
     xhr.send();
+});
+
+document.getElementById("sortBy").addEventListener("change", event => {
+    const sortMethod = event.target.value;
+    const toDoContainer = document.getElementById("showToDoContainer");
+
+    while (toDoContainer.firstChild) {
+        // clear nodelist
+        toDoContainer.removeChild(toDoContainer.firstChild);
+    }
+
+    document.getElementById("sortBy").value = "";
+
+    // const options = document.getElementById("sortBy").options;
+    // console.log("options: ", options);
+
+    // for (let i = 0; i < options.length; i++) {
+    //     options[i].selected = false;
+    // }
+
+    let xhrSort = new XMLHttpRequest();
+
+    xhrSort.addEventListener("readystatechange", () => {
+        if (xhrSort.readyState === 4 && xhrSort.status === 200) {
+            let outputToDoSort = JSON.parse(xhrSort.responseText);
+
+            console.log(outputToDoSort);
+
+            for (let i = 0; i < outputToDoSort.length; i++) {
+                addItemToList(outputToDoSort[i]);
+            }
+        }
+    });
+
+    xhrSort.open("GET", `/items?sortBy=${sortMethod}`, true);
+    xhrSort.send();
 });
 
 const addItemToList = toDoObj => {
@@ -74,6 +112,7 @@ const overlayOn = () => {
 };
 
 const createEditBox = toDoObject => {
+
 
 	const overlay = document.querySelector(".overlay");
 	const formNode = document.createElement("form");
