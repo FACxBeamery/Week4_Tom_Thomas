@@ -93,7 +93,7 @@ body {
     flex-direction: column;
     background-color: #e6e6e6;
     width: 50vw;
-    height: 20vw;
+    height: auto;
     text-align: center;
     color: #222;
     position: absolute;
@@ -108,7 +108,7 @@ body {
     border-radius: 4px;
     border: solid 1px rgb(7, 128, 226);
     margin: 0.5rem;
-    padding: 0.2rem;
+    padding: 0.25rem;
 }
 
 .no-delete-button {
@@ -116,22 +116,23 @@ body {
     border-radius: 4px;
     border: solid 1px rgb(7, 128, 226);
     margin: 0.5rem;
-    padding: 0.2rem;
+    padding: 0.25rem;
 }
 
 .todo-item {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-	border: solid 1px rgb(7, 128, 226);
-	margin: 0.5rem;
-	padding: 0.2rem;
-	width: 50vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    border: solid 1px rgb(7, 128, 226);
+    margin: 0.5rem;
+    padding: 0.25rem;
+    width: 50vw;
 }
 
 .logo {
-    width: 25vw;
+    width: 15vw;
+    max-width: 15vw;
 }
 
 header {
@@ -147,11 +148,10 @@ h1 {
 }
 
 .todo-list {
-	display: flex;
-	flex-direction: column;
-	justify-items: flex-start;
-	align-items: center;
-
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    align-items: center;
 }
 
 footer {
@@ -164,6 +164,20 @@ footer {
 }
 
 .todo-title {
-	margin-right: auto;
-	padding: 0.5rem;
+    margin-right: auto;
+    padding: 0.5rem;
+}
+
+.server-error-text {
+    display: flex;
+    flex-direction: column;
+    background-color: #e6e6e6;
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    color: rgb(130, 0, 0);
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    padding: 1rem;
 }
