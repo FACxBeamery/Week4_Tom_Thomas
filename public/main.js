@@ -175,9 +175,9 @@ const addYesDeleteButtonListener = id => {
 };
 
 const addNoDeleteButtonListener = () => {
-    const noButton = document.getElementById("no-delete-button");
-    const overlay = document.querySelector(".overlay");
-    noButton.addEventListener("click", () => {
-        overlay.style.display = "none";
-    });
+	const noButton = document.getElementById("#" + id.toString() + "-no-delete-button");
+	const overlay = document.querySelector(".overlay");
+	noButton.addEventListener("click", () => {
+		overlay.style.display = "none";
+	});
 };
