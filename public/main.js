@@ -4,9 +4,6 @@ window.addEventListener("load", () => {
 	xhr.addEventListener("readystatechange", () => {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			let outputToDo = JSON.parse(xhr.responseText);
-
-			console.log(outputToDo);
-
 			for (let i = 0; i < outputToDo.length; i++) {
 				addItemToList(outputToDo[i]);
 			}
@@ -21,10 +18,15 @@ const addItemToList = toDoObj => {
 	const title = toDoObj.title;
 	const id = toDoObj.id;
 	const idString = id.toString();
-	const para = document.createElement("p");
-	para.classList.add("todo-item");
-	const node = document.createTextNode(title);
-	para.appendChild(node);
+	const toDoItem = document.createElement("section");
+	toDoItem.classList.add("todo-item");
+	toDoItem.setAttribute("id", id.toString + "-todo-item");
+	const toDoTitle = document.createElement("p");
+	toDoTitle.classList.add("todo-title");
+	const titleNode = document.createTextNode(title);
+	toDoTitle.appendChild(titleNode);
+
+	const iconSection = document.createElement("section");
 	const checkbox = document.createElement("input");
 	const deleteButton = document.createElement("button");
 	const deleteIcon = document.createElement("i");
@@ -44,10 +46,13 @@ const addItemToList = toDoObj => {
 	checkbox.checked = toDoObj.status;
 	deleteButton.setAttribute("id", idString + "-delete");
 	deleteButton.classList.add("delete-item-button");
-	para.appendChild(checkbox);
-	para.appendChild(deleteButton);
-	para.appendChild(editButton);
-	document.getElementById("showToDoContainer").appendChild(para);
+
+	iconSection.appendChild(checkbox);
+	iconSection.appendChild(deleteButton);
+	iconSection.appendChild(editButton);
+	toDoItem.appendChild(toDoTitle);
+	toDoItem.appendChild(iconSection);
+	document.getElementById("showToDoContainer").appendChild(toDoItem);
 	addCheckBoxListener(id);
 	addEditItemListener(toDoObj);
 	addDeleteButtonListener(toDoObj.id.toString() + "-delete", toDoObj.title);
@@ -87,12 +92,13 @@ const createEditBox = toDoObject => {
 
 		xhrEditTitle.addEventListener("readystatechange", () => {
 			if (xhrEditTitle.readyState === 4 && xhrEditTitle.status === 200) {
-				document.getElementById("edit-submit-button").addEventListener("click", () => {
-					overlay.style.display = "none";
-				});
+				overlay.style.display = "none";
+				while (overlay.firstChild) {
+					// clear nodelist
+					overlay.removeChild(overlay.firstChild);
+				}
 			}
 		});
-
 		xhrEditTitle.open("PATCH", `items/${toDoObject.id}`, true);
 		xhrEditTitle.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		const body = `title=${inputNode.value}`;
@@ -102,12 +108,17 @@ const createEditBox = toDoObject => {
 
 const addCheckBoxListener = id => {
 	const checkbox = document.getElementById(id.toString());
+	const toDoItem = document.getElementById(id.toString + "-todo-item");
 	checkbox.addEventListener("click", () => {
+		if (checkbox.checked) {
+			toDoItem.style.border = "solid 1px green";
+		} else {
+			toDoItem.style.border = "solid 1px rgb(7, 128, 226)";
+		}
 		let xhrEditStatus = new XMLHttpRequest();
 		xhrEditStatus.open("PATCH", `items/${id}`, true);
 		xhrEditStatus.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		const body = `status=${checkbox.checked}`;
-		console.log("body: ", body);
 		xhrEditStatus.send(body);
 	});
 };
@@ -166,5 +177,9 @@ const addNoDeleteButtonListener = () => {
 	const overlay = document.querySelector(".overlay");
 	noButton.addEventListener("click", () => {
 		overlay.style.display = "none";
+		while (overlay.firstChild) {
+			// clear nodelist
+			overlay.removeChild(overlay.firstChild);
+		}
 	});
 };
