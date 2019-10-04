@@ -14,14 +14,21 @@
 
 	<body>
 		<header>
-			<h1>Check off!</h1>
+			<h1>Check off edited!</h1>
 			<img class="logo" src="img/checked.svg" alt="to do list logo" />
 		</header>
 
 		<main>
 			<div class="overlay"></div>
 			<form class="form-inline" action="/items" method="POST">
-				<input type="text" class="new-item-form" id="to-do-entry" name="title" placeholder="Add new to-do" />
+				<input
+					type="text"
+					class="new-item-form"
+					id="to-do-entry"
+					name="title"
+					placeholder="Add new to-do"
+					required
+				/>
 				<button class="new-item-button" type="submit">+</button>
 			</form>
 
