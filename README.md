@@ -1,2 +1,2 @@
 # Week4_Tom_Thomas
-![](https://travis-ci.com/FACxBeamery/Week4_Tom_Thomas.svg?branch=master)
+[![Build Status](https://travis-ci.com/FACxBeamery/Week4_Tom_Thomas.svg?branch=master)](https://travis-ci.com/FACxBeamery/Week4_Tom_Thomas)
