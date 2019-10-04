@@ -1,5 +1,6 @@
 window.addEventListener("load", () => {
-	let xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+
 
 	xhr.addEventListener("readystatechange", () => {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -10,11 +11,12 @@ window.addEventListener("load", () => {
 		}
 	});
 
-	xhr.open("GET", "/items?sortBy=none", true);
-	xhr.send();
+    xhr.open("GET", "/items?sortBy=none", true);
+    xhr.send();
 });
 
 const addItemToList = toDoObj => {
+
 	const title = toDoObj.title;
 	const id = toDoObj.id;
 	const idString = id.toString();
@@ -59,19 +61,20 @@ const addItemToList = toDoObj => {
 };
 
 const addEditItemListener = toDoObject => {
-	button = document.getElementById(toDoObject.id.toString() + "-edit");
-	button.addEventListener("click", () => {
-		overlayOn();
-		createEditBox(toDoObject);
-	});
+    button = document.getElementById(toDoObject.id.toString() + "-edit");
+    button.addEventListener("click", () => {
+        overlayOn();
+        createEditBox(toDoObject);
+    });
 };
 
 const overlayOn = () => {
-	overlay = document.querySelector(".overlay");
-	overlay.style.display = "block";
+    overlay = document.querySelector(".overlay");
+    overlay.style.display = "block";
 };
 
 const createEditBox = toDoObject => {
+
 	const overlay = document.querySelector(".overlay");
 	const formNode = document.createElement("form");
 	formNode.class = "form-inline";
@@ -124,52 +127,73 @@ const addCheckBoxListener = id => {
 };
 
 const addDeleteButtonListener = (id, title) => {
-	const deleteButton = document.getElementById(id);
-	deleteButton.addEventListener("click", () => {
-		overlayOn();
-		const overlay = document.querySelector(".overlay");
-		const para = document.createElement("p");
-		para.classList.add("confirm-text");
-		const node = document.createTextNode(`Are you sure you want to delete the item titled "${title}"?`);
-		para.appendChild(node);
-		overlay.appendChild(para);
+    const deleteButton = document.getElementById(id);
+    deleteButton.addEventListener("click", () => {
+        overlayOn();
+        const overlay = document.querySelector(".overlay");
+        const para = document.createElement("p");
+        para.classList.add("confirm-text");
+        const node = document.createTextNode(
+            `Are you sure you want to delete the item titled "${title}"?`
+        );
+        para.appendChild(node);
+        overlay.appendChild(para);
 
-		const yesButton = document.createElement("button");
-		yesButton.classList.add("yes-delete-button");
-		const yesButtonText = document.createTextNode("Yes");
-		yesButton.appendChild(yesButtonText);
-		yesButton.setAttribute("id", "yes-delete-button");
-		para.appendChild(yesButton);
+        const yesButton = document.createElement("button");
+        yesButton.classList.add("yes-delete-button");
+        const yesButtonText = document.createTextNode("Yes");
+        yesButton.appendChild(yesButtonText);
+        yesButton.setAttribute("id", "yes-delete-button");
+        para.appendChild(yesButton);
 
-		const noButton = document.createElement("button");
-		noButton.classList.add("no-delete-button");
-		const noButtonText = document.createTextNode("No");
-		noButton.setAttribute("id", "no-delete-button");
-		noButton.appendChild(noButtonText);
-		para.appendChild(noButton);
+        const noButton = document.createElement("button");
+        noButton.classList.add("no-delete-button");
+        const noButtonText = document.createTextNode("No");
+        noButton.setAttribute("id", "no-delete-button");
+        noButton.appendChild(noButtonText);
+        para.appendChild(noButton);
 
-		addYesDeleteButtonListener(id.substring(0, id.indexOf("-")));
-		addNoDeleteButtonListener();
-	});
+        addYesDeleteButtonListener(id.substring(0, id.indexOf("-")));
+        addNoDeleteButtonListener();
+    });
 };
 
 const addYesDeleteButtonListener = id => {
-	const yesButton = document.getElementById("yes-delete-button");
-	yesButton.addEventListener("click", () => {
-		let xhrDelete = new XMLHttpRequest();
+    const yesButton = document.getElementById("yes-delete-button");
+    yesButton.addEventListener("click", () => {
+        let xhrDelete = new XMLHttpRequest();
 
-		xhrDelete.addEventListener("readystatechange", () => {
-			if (xhrDelete.readyState === 4 /*&&
-                xhrDelete.status === 200*/) {
-				// add confirmation text here!
-				location.reload();
-			}
-		});
+        xhrDelete.addEventListener("readystatechange", () => {
+            if (
+                xhrDelete.readyState ===
+                4 /*&&
+                xhrDelete.status === 200*/
+            ) {
+                const overlay = document.querySelector(".overlay");
+                while (overlay.firstChild) {
+                    // clear nodelist
+                    overlay.removeChild(overlay.firstChild);
+                }
+                const deleteSuccess = document.createElement("p");
+                const deleteSuccessMessage = document.createTextNode(
+                    "Successful deletion!"
+                );
+                deleteSuccess.appendChild(deleteSuccessMessage);
+                deleteSuccess.classList.add("confirm-text");
+                overlay.appendChild(deleteSuccess);
+                setTimeout(() => {
+                    location.reload();
+                }, 700);
+            }
+        });
 
-		xhrDelete.open("DELETE", `items/${id}`, true);
-		xhrDelete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhrDelete.send();
-	});
+        xhrDelete.open("DELETE", `items/${id}`, true);
+        xhrDelete.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        xhrDelete.send();
+    });
 };
 
 const addNoDeleteButtonListener = () => {
